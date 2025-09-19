@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Crop Recommendation Result</title>
+	<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+	<div class="container">
+		<h1>Result</h1>
+		{% if error %}
+			<p class="error">{{ error }}</p>
+		{% else %}
+			<p class="success">Recommended Crop: <strong>{{ prediction }}</strong></p>
+		{% endif %}
+		<a href="/">Back</a>
+	</div>
+</body>
+</html>
