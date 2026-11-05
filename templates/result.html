@@ -1,20 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Crop Recommendation Result</title>
-	<link rel="stylesheet" href="/static/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Recommendation – CropWise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-	<div class="container">
-		<h1>Result</h1>
-		{% if error %}
-			<p class="error">{{ error }}</p>
-		{% else %}
-			<p class="success">Recommended Crop: <strong>{{ prediction }}</strong></p>
-		{% endif %}
-		<a href="/">Back</a>
-	</div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">🌾 CropWise</a>
+      <span class="tag">AI Crop Advisor</span>
+    </div>
+  </header>
+
+  <section class="hero small">
+    <div class="hero-inner">
+      <h1>Your <span>Recommendation</span></h1>
+    </div>
+    <div class="hills"></div>
+  </section>
+
+  <main class="container">
+    <div class="card result">
+      {% if error %}
+        <div class="emoji">⚠️</div>
+        <h2>Something went wrong</h2>
+        <p class="error">{{ error }}</p>
+      {% else %}
+        {% set icons = {
+          'rice':'🌾','maize':'🌽','chickpea':'🫘','kidneybeans':'🫘','pigeonpeas':'🫛',
+          'mothbeans':'🫘','mungbean':'🫛','blackgram':'🫘','lentil':'🫘','pomegranate':'🍎',
+          'banana':'🍌','mango':'🥭','grapes':'🍇','watermelon':'🍉','muskmelon':'🍈',
+          'apple':'🍎','orange':'🍊','papaya':'🍈','coconut':'🥥','cotton':'☁️',
+          'jute':'🌿','coffee':'☕'
+        } %}
+        <p class="label">Best crop for your field</p>
+        <div class="emoji">{{ icons.get(prediction|lower, '🌱') }}</div>
+        <h2 class="crop">{{ prediction|title }}</h2>
+        <p class="sub">Based on your soil nutrients, temperature, humidity, pH and rainfall, this crop is the best match.</p>
+      {% endif %}
+      <a href="/" class="btn primary">← Try another field</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Built with Flask &amp; scikit-learn · CropWise © 2026
+  </footer>
 </body>
 </html>
